@@ -10,5 +10,6 @@ void drawSpriteLine(uint8_t startX, uint8_t startY, uint16_t row);
 void drawFullSprite(uint8_t startX, uint8_t startY, uint8_t category, uint8_t sprite);
 void drawLandscape(uint8_t areaCode);
 uint8_t getRandomSprite(uint8_t category);
+void drawHealth(uint8_t health);
 
 #endif

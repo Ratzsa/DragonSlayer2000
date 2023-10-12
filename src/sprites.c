@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <stdlib.h>
 
 uint16_t fullSquare[3][9] = {{
                             0b000000000,
@@ -20,7 +21,17 @@ uint16_t fullSquare[3][9] = {{
                             0b111111111,
                             0b111111111,
                             0b111111111,
-                            0b111111111}};
+                            0b111111111},
+                        {
+                            0b000000000,
+                            0b000111000,
+                            0b001000100,
+                            0b010010010,
+                            0b010111010,
+                            0b010010010,
+                            0b010010010,
+                            0b000100001,
+                            0b010000100}};
 
 uint16_t trees[2][9] = {{
                             0b000000000,
@@ -167,15 +178,15 @@ uint16_t monster[3][9] = {{
                             0b001010101,
                             0b010100101},
                         {
-                            0b000000100,
-                            0b001000110,
-                            0b011111111,
-                            0b010111111,
-                            0b101011110,
-                            0b001011011,
-                            0b000001101,
-                            0b000000101,
-                            0b000000000}};
+                            0b000000000,
+                            0b000111000,
+                            0b001000100,
+                            0b010010010,
+                            0b010111010,
+                            0b010010010,
+                            0b010010010,
+                            0b000100001,
+                            0b010000100}};
 
 uint16_t getSpriteLine(uint8_t category, uint8_t sprite, uint8_t row)
 {
@@ -185,6 +196,7 @@ uint16_t getSpriteLine(uint8_t category, uint8_t sprite, uint8_t row)
         case 0:
             rowToReturn = fullSquare[sprite][row];
             break;
+
         case 1:
             rowToReturn = trees[sprite][row];
             break;
@@ -203,6 +215,22 @@ uint16_t getSpriteLine(uint8_t category, uint8_t sprite, uint8_t row)
 
         case 5:
             rowToReturn = monster[sprite][row];
+            break;
+
+        case 6:
+            rowToReturn = tools[sprite][row];
+            break;
+
+        case 7:
+            rowToReturn = tools[sprite][row];
+            break;
+
+        case 8:
+            rowToReturn = tools[sprite][row];
+            break;
+
+        case 11:
+            rowToReturn = fullSquare[sprite][row];
             break;
 
         default:

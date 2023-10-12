@@ -25,5 +25,6 @@
 #define GAME_MAX_Y 7
 
 void gameMain(uint8_t *receivedControls);
+void titleScreen();
 
 #endif

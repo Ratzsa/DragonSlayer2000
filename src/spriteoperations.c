@@ -45,11 +45,36 @@ void drawLandscape(uint8_t areaCode)
         }
     }
 
-    for(uint8_t i = 0; i < 7; i++)
+    for(uint8_t i = 0; i < GAME_MAX_Y; i++)
     {
-        for(uint8_t j = 0; j < 10; j++)
+        for(uint8_t j = 0; j < GAME_MAX_X; j++)
         {
-            uint8_t spriteNum = rand() % getRandomSprite(playField[i][j]);
+            uint8_t spriteNum;
+            if(playField[i][j] < 3 || playField[i][j] == 5) // Tree or house, or monster
+            {
+                spriteNum = rand() % getRandomSprite(playField[i][j]);
+            }
+            else if(playField[i][j] == 6) // Shield
+            {
+                spriteNum = 0;
+            }
+            else if(playField[i][j] == 7) // Sword
+            {
+                spriteNum = 1;
+            }
+            else if(playField[i][j] == 8) // Heart
+            {
+                spriteNum = 2;
+            }
+            else if(playField[i][j] == 11) // Grave
+            {
+                spriteNum = 2;
+            }
+            else
+            {
+                spriteNum = 0;
+            }
+
             drawFullSprite(j, i, playField[i][j], spriteNum);
         }
     }
@@ -92,4 +117,22 @@ uint8_t getRandomSprite(uint8_t category)
     }
 
     return numReturn;
+}
+
+void drawHealth(uint8_t health)
+{
+    uint8_t startX = 11;
+    uint8_t startY = 1;
+    for(uint8_t i = 0; i < 6; i++)
+    {
+        if(health > i)
+        {
+            drawFullSprite(startX, startY, 3, 2);
+        }
+        else
+        {
+            drawFullSprite(startX, startY, 0, 0);
+        }
+        startY++;
+    }
 }

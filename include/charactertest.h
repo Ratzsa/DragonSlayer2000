@@ -10,6 +10,8 @@ typedef struct
     uint8_t locationY;
     uint8_t characterModel;
     uint8_t areaCode;
+    int8_t health;
+    uint8_t slayedMonsters;
 }Character;
 
 uint8_t setMovement(Controller *inGameControls, Character *heroLocation);

@@ -128,6 +128,23 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    ssd1306_Fill(Black);
+    ssd1306_SetCursor(15, 27);
+    ssd1306_WriteString("Loading.", Font_7x10, White);
+    ssd1306_UpdateScreen();
+    HAL_Delay(250);
+    ssd1306_WriteString(".", Font_7x10, White);
+    ssd1306_UpdateScreen();
+    HAL_Delay(250);
+    ssd1306_WriteString(".", Font_7x10, White);
+    ssd1306_UpdateScreen();
+    HAL_Delay(250);
+    ssd1306_WriteString(".", Font_7x10, White);
+    ssd1306_UpdateScreen();
+    HAL_Delay(250);
+    ssd1306_WriteString(".", Font_7x10, White);
+    ssd1306_UpdateScreen();
+    HAL_Delay(250);
   }
   /* USER CODE END 3 */
 }

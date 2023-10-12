@@ -10,6 +10,7 @@
 #include "gamemain.h"
 #include "spriteoperations.h"
 #include "gameareas.h"
+#include "splashscreens.h"
 
 void gameMain(uint8_t *receivedControls)
 {
@@ -25,14 +26,74 @@ void gameMain(uint8_t *receivedControls)
     hero.locationX = 2;
     hero.locationY = 5;
     hero.characterModel = 0;
+    hero.health = 3;
+
+    bool stuckInASplash = true;
+
+    drawTitleScreen();
+    while(stuckInASplash)
+    {
+        convertControls(&gameControls, *receivedControls);
+        if(gameControls.green || gameControls.red || gameControls.yellow || gameControls.shoulder)
+        {
+            stuckInASplash = false;
+        }
+    }
+
+    ssd1306_Fill(Black);
 
     drawLandscape(hero.areaCode);
     drawCharacter(&hero);
+    drawHealth(hero.health);
 
     ssd1306_UpdateScreen();
 
     while(inGame)
     {
+        if(hero.health < 1)
+        {
+            inGame = false;
+            stuckInASplash = true;
+            drawGameOverScreen();
+            HAL_Delay(250);
+            while(stuckInASplash)
+            {
+                convertControls(&gameControls, *receivedControls);
+                if(gameControls.green || gameControls.red || gameControls.yellow || gameControls.shoulder)
+                {
+                    stuckInASplash = false;
+                }
+            }
+        }
+
+        if(hero.slayedMonsters >= 14)
+        {
+            inGame = false;
+            stuckInASplash = true;
+            drawWinScreen();
+            HAL_Delay(250);
+            while(stuckInASplash)
+            {
+                convertControls(&gameControls, *receivedControls);
+                if(gameControls.green || gameControls.red || gameControls.yellow || gameControls.shoulder)
+                {
+                    stuckInASplash = false;
+                }
+            }
+
+            stuckInASplash = true;
+            drawHeroScreen();
+            HAL_Delay(250);
+            while(stuckInASplash)
+            {
+                convertControls(&gameControls, *receivedControls);
+                if(gameControls.green || gameControls.red || gameControls.yellow || gameControls.shoulder)
+                {
+                    stuckInASplash = false;
+                }
+            }
+        }
+
         if(*receivedControls != oldControls)
         {
             convertControls(&gameControls, *receivedControls);
@@ -43,7 +104,15 @@ void gameMain(uint8_t *receivedControls)
         if(HAL_GetTick() - timeBetweenMovement > 100)
         {
             heroMove = checkCollision(&nextMove, &hero);
-            drawFullSprite(hero.locationX, hero.locationY, CAT_FILLSQUARE, 0);
+            if(heroMove > 8)
+            {
+                drawFullSprite(hero.locationX, hero.locationY, CAT_FILLSQUARE, 2);
+                heroMove -= 11;
+            }
+            else
+            {
+                drawFullSprite(hero.locationX, hero.locationY, CAT_FILLSQUARE, 0);
+            }
             moveCharacter(&hero, &heroMove);
             if(heroMove > 4 && heroMove < 9)
             {
