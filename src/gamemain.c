@@ -126,4 +126,6 @@ void gameMain(uint8_t *receivedControls)
 
         ssd1306_UpdateScreen();
     }
+
+    resetWorld();
 }
